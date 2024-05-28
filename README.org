@@ -1,0 +1,61 @@
+#+OPTIONS: ^:nil tags:nil num:nil
+
+* About
+
+This package provides additional commands and utilities for enhancing the functionality of Flyspell, a spell-checking extension for Emacs.
+
+* Table of Contents                                       :TOC_2_gh:QUOTE:
+#+BEGIN_QUOTE
+- [[#about][About]]
+- [[#requirements][Requirements]]
+- [[#installation][Installation]]
+  - [[#with-use-package-and-straightel][With use-package and straight.el]]
+  - [[#manual-installation][Manual installation]]
+- [[#main-commands][Main commands]]
+#+END_QUOTE
+
+* Requirements
+
+| Name  | Version |
+|-------+---------|
+| Emacs |    28.1 |
+
+
+* Installation
+
+** With use-package and straight.el
+#+begin_src elisp :eval no
+(use-package flyspell-extra
+  :straight (flyspell-extra
+             :repo "KarimAziev/flyspell-extra"
+             :type git
+             :host github)
+  :bind ("C-c k q" . flyspell-extra-menu)
+  :hook (flyspell-mode . flyspell-extra-buffer-or-region)
+  :config
+  (define-key flyspell-mode-map (kbd "C-M-;")
+              #'flyspell-extra-add-word-at-point-to-dict)
+  (define-key flyspell-mode-map (kbd "M-p") #'flyspell-extra-prev-error))
+#+end_src
+
+** Manual installation
+
+Download the source code and put it wherever you like, e.g. into =~/.emacs.d/flyspell-extra/=
+
+#+begin_src shell :eval no
+git clone https://github.com/KarimAziev/flyspell-extra.git ~/.emacs.d/flyspell-extra/
+#+end_src
+
+Add the downloaded directory to the load path:
+
+#+begin_src elisp :eval no
+(add-to-list 'load-path "~/.emacs.d/flyspell-extra/")
+(require 'flyspell-extra)
+#+end_src
+
+* Main commands
+
+- =flyspell-extra-menu=: Display a transient menu for Flyspell commands.
+- =flyspell-extra-buffer-or-region=: Check spelling in the active region or entire buffer.
+- =flyspell-extra-toogle-prog-mode=: Toggle Flyspell programming mode.
+- =flyspell-extra-add-word-at-point-to-dict=: Add the word at point to the dictionary.
