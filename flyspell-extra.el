@@ -48,7 +48,7 @@ Argument WORD is the word to be added to the dictionary.
 Optional argument FILE is the dictionary file to which the WORD will be added."
   (require 'ispell)
   (unless file (setq file ispell-personal-dictionary))
-  (if-let ((rep (with-temp-buffer
+  (if-let* ((rep (with-temp-buffer
                   (insert-file-contents file)
                   (goto-char (point-max))
                   (unless (re-search-backward
@@ -86,7 +86,7 @@ Optional argument FILE is the dictionary file to which the WORD will be added."
   "Add the word at point to the dictionary and refresh Flyspell mode."
   (interactive)
   (let ((word
-         (if-let ((overlay
+         (if-let* ((overlay
                    (seq-find #'flyspell-overlay-p (overlays-at
                                                    (point)))))
              (buffer-substring-no-properties (overlay-start overlay)
